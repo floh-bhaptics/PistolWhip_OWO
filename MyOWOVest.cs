@@ -52,7 +52,7 @@ namespace MyOWOVest
             LOG("Initializing suit");
             OWO.AutoConnect();
             //OWO.Connect("192.168.1.248");
-            Thread.Sleep(100);
+            Thread.Sleep(800);
             if (OWO.IsConnected)
             {
                 suitDisabled = false;
