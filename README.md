@@ -1,5 +1,5 @@
-# Pistol Whip haptic support
-bhaptics and OWO support for Pistol Whip
+# Pistol Whip OWO support
+OWO support for Pistol Whip
 
 ## Installation
 1. Get the [MelonLoader installer](https://melonwiki.xyz/#/?id=automated-installation) and install it on your game executable.
