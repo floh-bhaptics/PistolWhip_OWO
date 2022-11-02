@@ -24,9 +24,9 @@ namespace PistolWhip_OWO
         public static bool reloadTrigger = false;
         public static bool justKilled = false;
 
-        public override void OnApplicationStart()
+        public override void OnInitializeMelon()
         {
-            base.OnApplicationStart();
+            //base.OnApplicationStart();
             tactsuitVr = new TactsuitVR();
         }
 
@@ -161,7 +161,7 @@ namespace PistolWhip_OWO
             [HarmonyPostfix]
             public static void Postfix()
             {
-                tactsuitVr.PlayExplosion();
+                tactsuitVr.PlayBackFeedback("Death");
             }
         }
 
@@ -185,7 +185,7 @@ namespace PistolWhip_OWO
             public static void Postfix()
             {
                 tactsuitVr.StopHeartBeat();
-                tactsuitVr.PlayHeal();
+                tactsuitVr.PlayBackFeedback("Healing");
                 justKilled = false;
             }
         }
@@ -199,7 +199,7 @@ namespace PistolWhip_OWO
                 tactsuitVr.StopHeartBeat();
                 if (justKilled)
                 {
-                    tactsuitVr.PlayExplosion();
+                    tactsuitVr.PlayBackFeedback("Death");
                     justKilled = false;
                 }
             }
