@@ -173,8 +173,8 @@ namespace PistolWhip_OWO
             {
                 bool hasArmor = true;
                 try { hasArmor = __instance.hasArmor; } catch { return; }
-                if (!hasArmor) { tactsuitVr.StartHeartBeat(); justKilled = true; }
-                else { tactsuitVr.StopHeartBeat(); }
+                if (!hasArmor) { tactsuitVr.PlayBackFeedback("ThreeHeartBeats"); justKilled = true; }
+                else {  }
             }
         }
 
@@ -184,7 +184,7 @@ namespace PistolWhip_OWO
             [HarmonyPostfix]
             public static void Postfix()
             {
-                tactsuitVr.StopHeartBeat();
+                //tactsuitVr.StopHeartBeat();
                 tactsuitVr.PlayBackFeedback("Healing");
                 justKilled = false;
             }
@@ -196,7 +196,7 @@ namespace PistolWhip_OWO
             [HarmonyPostfix]
             public static void Postfix()
             {
-                tactsuitVr.StopHeartBeat();
+                //tactsuitVr.StopHeartBeat();
                 if (justKilled)
                 {
                     tactsuitVr.PlayBackFeedback("Death");

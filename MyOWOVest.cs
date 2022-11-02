@@ -20,7 +20,6 @@ namespace MyOWOVest
         public bool suitDisabled = true;
         public bool systemInitialized = false;
         // Event to start and stop the heartbeat thread
-        private static ManualResetEvent HeartBeat_mrse = new ManualResetEvent(false);
         public Dictionary<String, ISensation> FeedbackMap = new Dictionary<String, ISensation>();
 
 
@@ -39,23 +38,12 @@ namespace MyOWOVest
         public static ISensation Reloading = Reload1.ContinueWith(Reload2);
         */
 
-        public void HeartBeatFunc()
-        {
-            while (true)
-            {
-                // Check if reset event is active
-                HeartBeat_mrse.WaitOne();
-                OWO.Send(Sensation.HeartBeat, Muscle.Pectoral_L);
-                Thread.Sleep(600);
-            }
-        }
-
         public TactsuitVR()
         {
             LOG("Initializing suit");
             //OWO.AutoConnect();
             OWO.Connect("192.168.1.183");
-            Thread.Sleep(800);
+            Thread.Sleep(100);
             RegisterAllTactFiles();
             if (OWO.IsConnected)
             {
@@ -64,9 +52,8 @@ namespace MyOWOVest
             }
             if (suitDisabled) LOG("Owo is not enabled?!?!"); 
 
-            LOG("Starting HeartBeat thread...");
-            Thread HeartBeatThread = new Thread(HeartBeatFunc);
-            HeartBeatThread.Start();
+            LOG("Starting up...");
+            PlayBackFeedback("Start");
         }
 
         ~TactsuitVR()
@@ -131,11 +118,13 @@ namespace MyOWOVest
         {
             if (isTwoHanded)
             {
-                OWO.Send(Sensation.GunRecoil, Muscle.Arm_R.WithIntensity(70), Muscle.Arm_L.WithIntensity(70));
+                PlayBackFeedback("Recoil_L");
+                PlayBackFeedback("Recoil_R");
+                //OWO.Send(Sensation.GunRecoil, Muscle.Arm_R.WithIntensity(70), Muscle.Arm_L.WithIntensity(70));
                 return;
             }
-            if (isRightHand) OWO.Send(Sensation.GunRecoil, Muscle.Arm_R.WithIntensity(70));
-            else OWO.Send(Sensation.GunRecoil, Muscle.Arm_L.WithIntensity(70));
+            if (isRightHand) PlayBackFeedback("Recoil_R");
+            else PlayBackFeedback("Recoil_L");
         }
 
         public void GunReload(bool isRightHand, bool reloadHip, bool reloadShoulder, bool reloadTrigger)
@@ -162,24 +151,6 @@ namespace MyOWOVest
             }
             else LOG("Feedback not registered: " + feedback);
         }
-
-        public void StartHeartBeat()
-        {
-            HeartBeat_mrse.Set();
-        }
-
-        public void StopHeartBeat()
-        {
-            HeartBeat_mrse.Reset();
-        }
-
-        public void StopThreads()
-        {
-            // Yes, looks silly here, but if you have several threads like this, this is
-            // very useful when the player dies or starts a new level
-            StopHeartBeat();
-        }
-
 
     }
 }
