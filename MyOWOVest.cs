@@ -41,8 +41,8 @@ namespace MyOWOVest
         public TactsuitVR()
         {
             LOG("Initializing suit");
-            //OWO.AutoConnect();
-            OWO.Connect("192.168.1.183");
+            OWO.AutoConnect();
+            //OWO.Connect("192.168.1.183");
             Thread.Sleep(100);
             RegisterAllTactFiles();
             if (OWO.IsConnected)
