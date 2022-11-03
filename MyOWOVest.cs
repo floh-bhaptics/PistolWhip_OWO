@@ -118,9 +118,7 @@ namespace MyOWOVest
         {
             if (isTwoHanded)
             {
-                PlayBackFeedback("Recoil_L");
-                PlayBackFeedback("Recoil_R");
-                //OWO.Send(Sensation.GunRecoil, Muscle.Arm_R.WithIntensity(70), Muscle.Arm_L.WithIntensity(70));
+                PlayBackFeedback("Recoil_both");
                 return;
             }
             if (isRightHand) PlayBackFeedback("Recoil_R");
@@ -130,17 +128,20 @@ namespace MyOWOVest
         public void GunReload(bool isRightHand, bool reloadHip, bool reloadShoulder, bool reloadTrigger)
         {
             if (reloadTrigger) return;
-            if (!FeedbackMap.ContainsKey("Reloading")) { LOG("Reloading pattern not found!!!"); return; }
+            string pattern = "Reload";
             if (reloadHip)
             {
-                if (isRightHand) OWO.Send(FeedbackMap["Reloading"], Muscle.Abdominal_R);
-                else OWO.Send(FeedbackMap["Reloading"], Muscle.Abdominal_L);
+                pattern += "Hip";
+                if (isRightHand) pattern += "_R";
+                else pattern += "_L";
             }
             if (reloadShoulder)
             {
-                if (isRightHand) OWO.Send(FeedbackMap["Reloading"], Muscle.Pectoral_R);
-                else OWO.Send(FeedbackMap["Reloading"], Muscle.Pectoral_L);
+                pattern += "Shoulder";
+                if (isRightHand) pattern += "_R";
+                else pattern += "_L";
             }
+            PlayBackFeedback(pattern);
         }
 
         public void PlayBackFeedback(string feedback)
