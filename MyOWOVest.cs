@@ -40,22 +40,22 @@ namespace MyOWOVest
 
         public TactsuitVR()
         {
+            InitializeOWO();
+        }
+
+        private async void InitializeOWO()
+        {
             LOG("Initializing suit");
-            OWO.AutoConnect();
-            //OWO.Connect("192.168.1.183");
-            Thread.Sleep(100);
-            RegisterAllTactFiles();
+
+            await OWO.AutoConnectAsync();
+
             if (OWO.IsConnected)
             {
                 suitDisabled = false;
                 LOG("OWO suit connected.");
             }
-            if (suitDisabled) LOG("Owo is not enabled?!?!"); 
-
-            LOG("Starting up...");
-            PlayBackFeedback("Start");
+            if (suitDisabled) LOG("Owo is not enabled?!?!");
         }
-
         ~TactsuitVR()
         {
             LOG("Destructor called");
