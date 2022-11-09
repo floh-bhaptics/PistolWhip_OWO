@@ -40,6 +40,7 @@ namespace MyOWOVest
 
         public TactsuitVR()
         {
+            RegisterAllTactFiles();
             InitializeOWO();
         }
 
