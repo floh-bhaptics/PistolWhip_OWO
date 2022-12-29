@@ -7,7 +7,7 @@ using UnityEngine;
 
 using MelonLoader;
 using HarmonyLib;
-
+using Il2Cpp;
 using MyOWOVest;
 
 
@@ -16,7 +16,7 @@ namespace PistolWhip_OWO
 {
     public class PistolWhip_OWO : MelonMod
     {
-        public static TactsuitVR tactsuitVr;
+        public static TactsuitVR tactsuitVr = null!;
         public static bool rightGunHasAmmo = true;
         public static bool leftGunHasAmmo = true;
         public static bool reloadHip = true;
