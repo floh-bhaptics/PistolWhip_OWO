@@ -10,6 +10,9 @@ using HarmonyLib;
 using Il2Cpp;
 using MyOWOVest;
 
+[assembly: MelonInfo(typeof(PistolWhip_OWO.PistolWhip_OWO), "PistolWhip_OWO", "2.0.0", "Florian Fahrenberger")]
+[assembly: MelonGame("Cloudhead Games, Ltd.", "Pistol Whip")]
+
 
 
 namespace PistolWhip_OWO
