@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Resources;
 using System.Text;
 using System.Threading;
 using MelonLoader;
@@ -18,7 +20,7 @@ namespace MyOWOVest
          * */
         public bool suitDisabled = true;
         public bool systemInitialized = false;
-        public Dictionary<String, ISensation> FeedbackMap = new Dictionary<String, ISensation>();
+        public Dictionary<String, Sensation> FeedbackMap = new Dictionary<String, Sensation>();
 
 
         /*
@@ -46,6 +48,11 @@ namespace MyOWOVest
         {
             LOG("Initializing suit");
 
+            ResourceSet resourceSetSensations = PistolWhip_OWO.Sensations.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, true, true);
+            String authString = resourceSetSensations.GetString("Auth");
+            var gameAuth = GameAuth.Parse(authString).WithId("71587680");
+
+            OWO.Configure(gameAuth);
             await OWO.AutoConnect();
 
             if (OWO.ConnectionState == ConnectionState.Connected)
@@ -69,9 +76,7 @@ namespace MyOWOVest
 
         public void LOG(string logStr)
         {
-#pragma warning disable CS0618 // remove warning that the logger is deprecated
             MelonLogger.Msg(logStr);
-#pragma warning restore CS0618
         }
 
         void RegisterAllTactFiles()
@@ -91,7 +96,7 @@ namespace MyOWOVest
                 string tactFileStr = File.ReadAllText(fullName);
                 try
                 {
-                    ISensation test = Sensation.FromCode(tactFileStr);
+                    Sensation test = Sensation.Parse(tactFileStr);
                     //bHaptics.RegisterFeedback(prefix, tactFileStr);
                     LOG("Pattern registered: " + prefix);
                     FeedbackMap.Add(prefix, test);
@@ -106,11 +111,11 @@ namespace MyOWOVest
 
         public void PlayBackHit()
         {
-            Sensation sensation = Sensation.ShotEntry;
+            //Sensation sensation = 
             // two parameters can be given to the pattern to move it on the vest:
             // 1. An angle in degrees [0, 360] to turn the pattern to the left
             // 2. A shift [-0.5, 0.5] in y-direction (up and down) to move it up or down
-            OWO.Send(sensation, Muscle.Pectoral_L, Muscle.Pectoral_R);
+            //OWO.Send();
         }
 
         public void Recoil(bool isRightHand, bool isTwoHanded = false)
