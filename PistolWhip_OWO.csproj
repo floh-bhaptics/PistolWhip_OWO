@@ -18,16 +18,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="OWO" Version="2.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>F:\SteamLibrary\steamapps\common\Pistol Whip\MelonLoader\net6\0Harmony.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
       <HintPath>F:\SteamLibrary\steamapps\common\Pistol Whip\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="bHapticsLib">
-      <HintPath>F:\SteamLibrary\steamapps\common\Pistol Whip\MelonLoader\net6\bHapticsLib.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="MelonLoader">
@@ -41,9 +41,6 @@
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>F:\SteamLibrary\steamapps\common\Pistol Whip\MelonLoader\Il2CppAssemblies\UnityEngine.PhysicsModule.dll</HintPath>
       <Private>False</Private>
-    </Reference>
-    <Reference Include="OWO.dev">
-      <HintPath>..\OWO_SDK\OWO.dev.dll</HintPath>
     </Reference>
   </ItemGroup>
 
