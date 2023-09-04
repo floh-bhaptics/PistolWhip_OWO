@@ -4,8 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using MelonLoader;
-using OWOHaptic;
-//using MyOWOSensations;
+using OWOGame;
 
 namespace MyOWOVest
 {
@@ -19,7 +18,6 @@ namespace MyOWOVest
          * */
         public bool suitDisabled = true;
         public bool systemInitialized = false;
-        // Event to start and stop the heartbeat thread
         public Dictionary<String, ISensation> FeedbackMap = new Dictionary<String, ISensation>();
 
 
@@ -48,9 +46,9 @@ namespace MyOWOVest
         {
             LOG("Initializing suit");
 
-            await OWO.AutoConnectAsync();
+            await OWO.AutoConnect();
 
-            if (OWO.IsConnected)
+            if (OWO.ConnectionState == ConnectionState.Connected)
             {
                 suitDisabled = false;
                 LOG("OWO suit connected.");
