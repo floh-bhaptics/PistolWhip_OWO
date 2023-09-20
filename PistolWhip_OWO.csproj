@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OWO" Version="2.3.2" />
+    <PackageReference Include="OWO" Version="2.3.10" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,19 +44,8 @@
     </Reference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Sensations.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Sensations.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Sensations.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Sensations.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="XCOPY &quot;$(ProjectDir)OWO\&quot; &quot;$(TargetDir)OWO\&quot; /S /Y" />
+  </Target>
   
 </Project>
