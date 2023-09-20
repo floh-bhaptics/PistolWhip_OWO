@@ -48,9 +48,7 @@ namespace MyOWOVest
         {
             LOG("Initializing suit");
 
-            ResourceSet resourceSetSensations = PistolWhip_OWO.Sensations.ResourceManager.GetResourceSet(CultureInfo.InvariantCulture, true, true);
-            String authString = resourceSetSensations.GetString("Auth");
-            var gameAuth = GameAuth.Parse(authString).WithId("71587680");
+            var gameAuth = GameAuth.Create(AllBakedSensations()).WithId("71587680");
 
             OWO.Configure(gameAuth);
             await OWO.AutoConnect();
@@ -62,10 +60,25 @@ namespace MyOWOVest
             }
             if (suitDisabled) LOG("Owo is not enabled?!?!");
         }
+
         ~TactsuitVR()
         {
             LOG("Destructor called");
             DisconnectOwo();
+        }
+
+        private BakedSensation[] AllBakedSensations()
+        {
+            var result = new List<BakedSensation>();
+
+            foreach (var sensation in FeedbackMap.Values)
+            {
+                if (sensation is not BakedSensation baked) continue;
+
+                result.Add(baked);
+            }
+
+            return result.ToArray();
         }
 
         public void DisconnectOwo()
@@ -81,7 +94,7 @@ namespace MyOWOVest
 
         void RegisterAllTactFiles()
         {
-            
+
             string configPath = Directory.GetCurrentDirectory() + "\\Mods\\OWO";
             DirectoryInfo d = new DirectoryInfo(configPath);
             FileInfo[] Files = d.GetFiles("*.owo", SearchOption.AllDirectories);
@@ -104,7 +117,7 @@ namespace MyOWOVest
                 catch (Exception e) { LOG(e.ToString()); }
 
             }
-            
+
             systemInitialized = true;
         }
 
