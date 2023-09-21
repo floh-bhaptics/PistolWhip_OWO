@@ -135,30 +135,33 @@ namespace MyOWOVest
         {
             if (isTwoHanded)
             {
-                PlayBackFeedback("Recoil_both");
+                var myMuscle = new Muscle[2] { Muscle.Arm_L, Muscle.Arm_R };
+                PlayBackFeedback("Recoil", myMuscle);
                 return;
             }
-            if (isRightHand) PlayBackFeedback("Recoil_R");
-            else PlayBackFeedback("Recoil_L");
+            if (isRightHand) PlayBackFeedback("Recoil", Muscle.Arm_R);
+            else PlayBackFeedback("Recoil", Muscle.Arm_L);
+            
         }
 
         public void GunReload(bool isRightHand, bool reloadHip, bool reloadShoulder, bool reloadTrigger)
         {
             if (reloadTrigger) return;
             string pattern = "Reload";
+            Muscle myMuscle = Muscle.Abdominal_R;
             if (reloadHip)
             {
                 pattern += "Hip";
-                if (isRightHand) pattern += "_R";
-                else pattern += "_L";
+                if (isRightHand) myMuscle = Muscle.Abdominal_R;
+                else myMuscle = Muscle.Abdominal_L;
             }
             if (reloadShoulder)
             {
                 pattern += "Shoulder";
-                if (isRightHand) pattern += "_R";
-                else pattern += "_L";
+                if (isRightHand) myMuscle = Muscle.Pectoral_R;
+                else myMuscle = Muscle.Pectoral_L;
             }
-            PlayBackFeedback(pattern);
+            PlayBackFeedback(pattern, myMuscle);
         }
 
         public void PlayBackFeedback(string feedback)
@@ -166,6 +169,24 @@ namespace MyOWOVest
             if (FeedbackMap.ContainsKey(feedback))
             {
                 OWO.Send(FeedbackMap[feedback]);
+            }
+            else LOG("Feedback not registered: " + feedback);
+        }
+
+        public void PlayBackFeedback(string feedback, Muscle onMuscle)
+        {
+            if (FeedbackMap.ContainsKey(feedback))
+            {
+                OWO.Send(FeedbackMap[feedback].WithMuscles(onMuscle));
+            }
+            else LOG("Feedback not registered: " + feedback);
+        }
+
+        public void PlayBackFeedback(string feedback, Muscle[] onMuscles)
+        {
+            if (FeedbackMap.ContainsKey(feedback))
+            {
+                OWO.Send(FeedbackMap[feedback].WithMuscles(onMuscles));
             }
             else LOG("Feedback not registered: " + feedback);
         }
