@@ -12,31 +12,10 @@ namespace MyOWOVest
 {
     public class TactsuitVR
     {
-        /* A class that contains the basic functions for the bhaptics Tactsuit, like:
-         * - A Heartbeat function that can be turned on/off
-         * - A function to read in and register all .tact patterns in the bHaptics subfolder
-         * - A logging hook to output to the Melonloader log
-         * - 
-         * */
         public bool suitDisabled = true;
         public bool systemInitialized = false;
         public Dictionary<String, Sensation> FeedbackMap = new Dictionary<String, Sensation>();
 
-
-        /*
-        //public static ISensation Explosion => new Sensation(100, 1f, 80, 100f, 500f, 0f);
-        public static Sensation Explosion = Sensation.Create(100, 1f, 80, 100f, 500f, 0f);
-        public static ISensation ExplosionBelly = Sensation.CreateWithMuscles(Explosion, Muscle.Lumbar_L, Muscle.Lumbar_R, Muscle.Abdominal_L, Muscle.Abdominal_R);
-        //public static OWOSensationWithMuscles ExplosionBelly = new OWOSensationWithMuscles(Explosion, OWOMuscle.Abdominal_Left, OWOMuscle.Abdominal_Right, OWOMuscle.Lumbar_Left, OWOMuscle.Lumbar_Right);
-
-        public static Sensation Healing = Sensation.Create(70, 0.5f, 65, 300f, 200f, 0f);
-        public static ISensation HealingBody = Sensation.CreateWithMuscles(Healing, Muscle.AllMuscles);
-
-        
-        public static Sensation Reload1 = Sensation.Create(100, 0.3f, 50, 100f, 100f, 0f);
-        public static Sensation Reload2 = Sensation.Create(100, 0.2f, 40, 0f, 100f, 0f);
-        public static ISensation Reloading = Reload1.ContinueWith(Reload2);
-        */
 
         public TactsuitVR()
         {
@@ -124,11 +103,7 @@ namespace MyOWOVest
 
         public void PlayBackHit()
         {
-            //Sensation sensation = 
-            // two parameters can be given to the pattern to move it on the vest:
-            // 1. An angle in degrees [0, 360] to turn the pattern to the left
-            // 2. A shift [-0.5, 0.5] in y-direction (up and down) to move it up or down
-            //OWO.Send();
+            PlayBackFeedback("ShotEntry", new Muscle[2] { Muscle.Pectoral_L, Muscle.Pectoral_R });
         }
 
         public void Recoil(bool isRightHand, bool isTwoHanded = false)
