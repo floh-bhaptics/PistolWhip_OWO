@@ -52,11 +52,14 @@ namespace MyOWOVest
 
             foreach (var sensation in FeedbackMap.Values)
             {
-                if (sensation is not BakedSensation baked) continue;
-
+                if (sensation is not BakedSensation baked)
+                {
+                    LOG("Sensation not baked? " + sensation);
+                    continue;
+                }
+                LOG("Registered baked sensation: " + baked.name);
                 result.Add(baked);
             }
-
             return result.ToArray();
         }
 
@@ -89,8 +92,6 @@ namespace MyOWOVest
                 try
                 {
                     Sensation test = Sensation.Parse(tactFileStr);
-                    //bHaptics.RegisterFeedback(prefix, tactFileStr);
-                    LOG("Pattern registered: " + prefix);
                     FeedbackMap.Add(prefix, test);
                 }
                 catch (Exception e) { LOG(e.ToString()); }
@@ -132,7 +133,6 @@ namespace MyOWOVest
             }
             if (reloadShoulder)
             {
-                pattern += "Shoulder";
                 if (isRightHand) myMuscle = Muscle.Pectoral_R;
                 else myMuscle = Muscle.Pectoral_L;
             }
