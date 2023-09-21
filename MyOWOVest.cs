@@ -27,6 +27,7 @@ namespace MyOWOVest
         {
             LOG("Initializing suit");
 
+            // New auth.
             var gameAuth = GameAuth.Create(AllBakedSensations()).WithId("71587680");
 
             OWO.Configure(gameAuth);
