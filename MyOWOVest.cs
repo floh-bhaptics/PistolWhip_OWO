@@ -128,7 +128,6 @@ namespace MyOWOVest
             Muscle myMuscle = Muscle.Abdominal_R;
             if (reloadHip)
             {
-                pattern += "Hip";
                 if (isRightHand) myMuscle = Muscle.Abdominal_R;
                 else myMuscle = Muscle.Abdominal_L;
             }
