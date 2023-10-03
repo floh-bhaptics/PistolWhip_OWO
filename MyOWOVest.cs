@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Net;
 using System.Resources;
 using System.Text;
 using System.Threading;
@@ -31,7 +32,13 @@ namespace MyOWOVest
             var gameAuth = GameAuth.Create(AllBakedSensations()).WithId("71587680");
 
             OWO.Configure(gameAuth);
-            await OWO.AutoConnect();
+            string myIP = getIpFromFile("OWO_Manual_IP.txt");
+            if (myIP == "") await OWO.AutoConnect();
+            else
+            {
+                LOG("Found manual IP address: " + myIP);
+                await OWO.Connect(myIP);
+            }
 
             if (OWO.ConnectionState == ConnectionState.Connected)
             {
@@ -39,6 +46,19 @@ namespace MyOWOVest
                 LOG("OWO suit connected.");
             }
             if (suitDisabled) LOG("Owo is not enabled?!?!");
+        }
+
+        public string getIpFromFile(string filename)
+        {
+            string ip = "";
+            string filePath = Directory.GetCurrentDirectory() + "\\Mods\\" + filename;
+            if (File.Exists(filePath))
+            {
+                string fileBuffer = File.ReadAllText(filePath);
+                IPAddress address;
+                if (IPAddress.TryParse(fileBuffer, out address)) ip = fileBuffer;
+            }
+            return ip;
         }
 
         ~TactsuitVR()
